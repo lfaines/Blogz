@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+        .center {text-align: center}
+        textarea {
+                margin: 10px 0;
+                width: 100px;
+                height: 120px;
+            }
+            .error {color: red;}
+    </style>
+    
+    <div class="center" style="background-color:black; color:white; padding:20px;">
+        <h1>Create a New Blog Post!</h1>
+    </div>
+
+<form method ="POST">
+    <table>
+        <tr>
+            <td>
+                <label for = "post-title">Title<label></td>
+            <td>
+                <input name = "name" type = "text" value ="{{name}}">
+                <h4 class = "error" name="name_error" value = "name_error">{{name_error}}</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for = "post-content">Entry</label></td>
+                <td>
+                    <textarea type ='textarea' name = 'entry' value = "{{entry}}"></textarea>
+                    <h4 class = "error" name="entry_error">{{entry_error}}</h4>
+                </td>
+        </tr>
+    </table>
+    <input type = "submit" value = "Add Entry" />
+
+</form>
+
+{% endblock %}
