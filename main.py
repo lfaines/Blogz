@@ -40,12 +40,16 @@ def validate_newpost():
         entry =  ""
     
     if not name_error and not entry_error:
-        redirect('/blog')
+        request.args == True
+        entry = request.args.get('id')
+        blogs = Blog.query.get(entry)
+        return render_template('single_blog.html', blog=blogs)
+        #return redirect('/blog
     
     else:
         return render_template("create_blog.html", name_error=name_error, entry_error=entry_error, name=name, entry=entry)
 
-    return render_template('home.html', blogs=blogs)
+    return render_template('display_blogs.html', blogs=blogs)
 
 
 @app.route('/blog', methods = ['POST', 'GET'])
