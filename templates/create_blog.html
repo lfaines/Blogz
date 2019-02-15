@@ -16,25 +16,22 @@
     </div>
 
 <form method ="POST">
-    <table>
-        <tr>
-            <td>
-                <label for = "post-title">Title<label></td>
-            <td>
-                <input name = "name" type = "text" value ="{{name}}">
-                <h4 class = "error" name="name_error" value = "name_error">{{name_error}}</h4>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for = "post-content">Entry</label></td>
-                <td>
+                <p>
+                <label for = "post-title">Title</label>
+                </p>
+                <p>
+                <input name = "name" type = "text" value ="{{name}}"/>
+                <h4 class = "error" name="name_error">{{name_error}}</h4>
+                </p>
+                <p>
+                <label for = "post-content">Entry</label>
+                </p>
+                <p>
                     <textarea type ='textarea' name = 'entry' value = "{{entry}}"></textarea>
                     <h4 class = "error" name="entry_error">{{entry_error}}</h4>
-                </td>
-        </tr>
-    </table>
-    <input type = "submit" value = "Add Entry" />
+                </p>
+                <br><br>
+                <input type = "submit" value = "Add Entry" />
 
 </form>
 

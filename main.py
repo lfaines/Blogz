@@ -45,8 +45,6 @@ def validate_newpost():
             name = request.form['name']
             entry = request.form['entry']
             new_blog = Blog(name, entry)
-            db.session.add(new_blog)
-            db.session.commit()
             blog = new_blog
             return render_template('single_blog.html', blog=blog)
 
