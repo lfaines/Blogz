@@ -40,15 +40,26 @@ def validate_newpost():
         entry =  ""
     
     if not name_error and not entry_error:
-        redirect('/blog')
+        if request.args:
+            entry = request.args.get('id')
+            blogs = Blog.query.get(entry)
+            return render_template('single_blog.html', blog=blogs)
     
     else:
         return render_template("create_blog.html", name_error=name_error, entry_error=entry_error, name=name, entry=entry)
 
-    return render_template('home.html', blogs=blogs)
+    return render_template('single_blog.html', blog=blogs)
 
-@app.route('/blog', methods=['POST', 'GET'])
-def display_blogs__on_homepage():
+
+@app.route('/blog', methods = ['POST', 'GET'])
+def display_blogs_individually():
+    if request.args:
+        entry = request.args.get('id')
+        blogs = Blog.query.get(entry)
+        return render_template('single_blog.html', blog=blogs)
+    blogs = Blog.query.all()  
+    return render_template('display_blogs.html', blogs=blogs)
+
     if request.method == 'POST':
         name = request.form['name']
         entry = request.form['entry']
@@ -56,9 +67,7 @@ def display_blogs__on_homepage():
         db.session.add(new_blog)
         db.session.commit()
     blogs = Blog.query.all() 
-        
-    return render_template('home.html', title="Build A Blog!", blogs=blogs)
-
+    return render_template('display_blogs.html', blogs=blogs)
 
 if __name__ == '__main__':
     app.run()
