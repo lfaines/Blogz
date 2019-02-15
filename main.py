@@ -27,7 +27,6 @@ def validate_newpost():
         new_blog = Blog(name, entry)
         db.session.add(new_blog)
         db.session.commit()
-    blogs = Blog.query.all() 
             
     name_error = ""
     entry_error = ""
@@ -38,19 +37,18 @@ def validate_newpost():
         name = ""
         entry_error = "You cannot leave field blank." 
         entry =  ""
-    
-    if not name_error and not entry_error:
-        request.args == True
-        entry = request.args.get('id')
-        blogs = Blog.query.get(entry)
-        return render_template('single_blog.html', blog=blogs)
-        #return redirect('/blog
-    
-    else:
+
+    while name_error and entry_error:
         return render_template("create_blog.html", name_error=name_error, entry_error=entry_error, name=name, entry=entry)
-
-    return render_template('display_blogs.html', blogs=blogs)
-
+    else:
+        if request.method== 'POST':
+            name = request.form['name']
+            entry = request.form['entry']
+            new_blog = Blog(name, entry)
+            db.session.add(new_blog)
+            db.session.commit()
+            blog = new_blog
+            return render_template('single_blog.html', blog=blog)
 
 @app.route('/blog', methods = ['POST', 'GET'])
 def display_blogs_individually():
