@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.center {text-align: center;}
+</style>
+
+<div class = 'center'>
+<p><a href = "/blog?user={{user.id}}">{{user.username}}</a></p>
+<h1>{{blog.name}}</h1>
+<p>{{blog.entry}}</p>
+<em>Written By: </em><a href ="/blog?user={{user.userId}}">{{user.username}}</a>
+    
+</div>
+
+{%endblock%}

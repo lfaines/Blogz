@@ -68,22 +68,21 @@ def validate_newpost():
 @app.route('/blog', methods = ['GET'])
 def index():
     if request.args:
-        entry = request.args.get('id')
+        entry = request.args.get('user')
         users = User.query.get(entry)
         return render_template('singleUser.html', title = "Blogz", user=users)
     users = User.query.all()
     return render_template('index.html', title = "Blogz", users=users)
 
-@app.route('/blog')
+
 @app.route('/allpost', methods = ['GET'])
 def display_blogs():
     if request.args:
         blog = request.args.get('id')
         blogs = Blog.query.get(blog)
-        user = request.args.get('user')
+        user = request.args.get('id')
         users = User.query.get(user)
-        view = Blog(blog, user)
-        return render_template('single_blog.html', title = "Blogz", view = view)
+        return render_template('single_blog.html', title = "Blogz", blog=blogs, user = users)
     blogs = Blog.query.all()
     users = User.query.all()  
     return render_template('display_blogs.html', title = "Blogz", blogs=blogs, user = users)

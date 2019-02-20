@@ -7,8 +7,8 @@
 </style>
 
 <div class = 'center'>
-<h1 class = "color"><a href ="/blog?id={{blog.id}}"></a>{{blog.name}}</h1>
+<h1 class = "color"><a href ="/allpost?id={{blog.id}}"></a>{{blog.name}}</h1>
 <p>{{blog.entry}}</p>
-
+<p>Written By: <a href = "/allpost?user={{user.userId}}">{{user.username}}</a></p>
 
 {%endblock%}

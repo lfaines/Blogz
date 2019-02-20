@@ -14,9 +14,9 @@
     {% else %}
         <div class = "center">
             {% for blog in blogs %} 
-            <h1><a href ="/blog?id={{blog.id}}">{{blog.name}}</a></h1>
+            <h1><a href ="/allpost?id={{blog.id}}">{{blog.name}}</a></h1>
             <p>{{blog.entry}}</p>
-            <em>Written By: </em><a href ="/blog?user={{user.userId}}">{{user.username}}</a>
+            <em>Written By: </em><a href ="/allpost?user={{user.userId}}">{{user.username}}</a>
             {%endfor%}
         </div>
     {%endif%}
