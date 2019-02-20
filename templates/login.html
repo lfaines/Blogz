@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+        .center {text-align: center;}
+</style>
+    
+<div class="center" style="background-color:black; color:white; padding:20px;">
+    <h1>Login to Your Account</h1>
+</div>
+
+<p>
+<form action = '/login' method ="post">
+    <table>
+        <tr>
+            <td><label for = "username">Username:</label></td>
+            <td><input name = "username" type = "text" value ="{{username}}"></td>
+        </tr>
+
+        <tr>
+            <td><label for = "password">Password:</label></td>
+            <td><input name = "password" type = "password"></td>
+        </tr>
+    </table>
+    <input type = "submit" value = "Login">
+</form>
+</p>
+
+<p>No worries if you don't have an account, you can <a href ="/signup">Create One</a></p>
+
+{% endblock content %}

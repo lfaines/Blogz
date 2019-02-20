@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+        .center {text-align: center;}
+        .red {color: red; inset-inline: right;}
+</style>
+    
+<div class="center" style="background-color:black; color:white; padding:20px;">
+    <h1>Signup for a New User Account</h1>
+</div>
+
+<p>
+<form action="/signup" method ="post">
+    <label> Username:</label>
+                <input type = "text" name = "username" value="{{username}}"/>
+                <h4 class = 'red' name = "username_error">{{username_error}}</h4>
+                <br>
+            <label>Password:</label>
+                <input type = "password" name = "password"/>
+                <h4 class = "red" name = "password_error">{{password_error}}</h4>
+                <br>
+            <label>Verify Password:
+                <input type = "password" name = "verify" />
+                <h4 class = "red" name = "verify_error">{{verify_error}}</h4>
+    <input type = "submit" value = "Signup">
+</form>
+</p>
+
+{% endblock content %}
