@@ -20,8 +20,8 @@ class Blog(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(40), unique = True)
-    password = db.Column(db.String(40))
+    username = db.Column(db.String(20), unique = True)
+    password = db.Column(db.String(20))
     blogs =  db.relationship('Blog', backref='owner')#sqlalchemy should populate the blog list with things from the class blog such that the owner property is equal to the user
 
     def __init__(self, username, password):
@@ -34,12 +34,12 @@ def newpost():
 
 @app.route('/newpost', methods=['POST'])
 def validate_newpost():
+
     owner = User.query.filter_by(username=session['username']).first()
     
     if request.method == 'POST':
         name = request.form['name']
         entry = request.form['entry']
-        
         new_blog = Blog(name, entry, owner)
         db.session.add(new_blog)
         db.session.commit()
@@ -65,6 +65,7 @@ def validate_newpost():
             blog = new_blog
             return render_template('single_blog.html', blog=blog, user = user, owner = owner)
 
+@app.route('/')
 @app.route('/home')
 def display_users():
     if request.args:
@@ -77,17 +78,15 @@ def display_users():
     return render_template('index.html', title = "Blogz", users=users)
 
 
-@app.route('/blog', methods = ['POST', 'GET'])
+@app.route('/', methods = ['POST', 'GET'])
 def index():
     owner = User.query.filter_by(username=session['username']).first()
-
     if request.method == 'POST':
         blog_name = request.form['name']
         blog_entry = request.form['entry']
         new_blog = Blog(blog_name, owner)
         db.session.add(new_blog)
         db.session.commit()
-
     blogs = Blog.query.all()
     #new_blogs = Blog.query.filter_by(owner)#.all()
     return render_template('create_blog.html', title = "Blogz", blogs=blogs)
