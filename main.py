@@ -159,7 +159,7 @@ def signup():
 def logout():
     del session['username']
     flash("Logged out")
-    return redirect('/blog')
+    return redirect('/home')
 
 if __name__ == '__main__':
     app.run()
