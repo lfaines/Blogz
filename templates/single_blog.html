@@ -3,12 +3,13 @@
 
 <style>
 .center {text-align: center;}
-.color {color: darkviolet;}
 </style>
 
 <div class = 'center'>
-<h1 class = "color"><a href ="/allpost?id={{blog.id}}"></a>{{blog.name}}</h1>
+<h1>{{blog.name}}</h1>
+</div>
 <p>{{blog.entry}}</p>
-<p>Written By: <a href = "/allpost?user={{user.userId}}">{{user.username}}</a></p>
+<em>Written by: </em><a href = '/allpost?user={{user.userId}}'>{{user.username}}</a>
+
 
 {%endblock%}

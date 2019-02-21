@@ -61,19 +61,36 @@ def validate_newpost():
             name = request.form['name']
             entry = request.form['entry']
             new_blog = Blog(name, entry, owner)
+            user = User.query.all()
             blog = new_blog
-            return render_template('single_blog.html', blog=blog)
+            return render_template('single_blog.html', blog=blog, user = user, owner = owner)
 
 @app.route('/home')
-@app.route('/blog', methods = ['GET'])
-def index():
+def display_users():
     if request.args:
         entry = request.args.get('user')
         users = User.query.get(entry)
-        return render_template('singleUser.html', title = "Blogz", user=users)
+        blog = request.args.get('user')
+        blogs = Blog.query.get(blog)
+        return render_template  ('singleUser.html', title = "Blogz",  user=users, blog = blogs)
     users = User.query.all()
     return render_template('index.html', title = "Blogz", users=users)
 
+
+@app.route('/blog', methods = ['POST', 'GET'])
+def index():
+    owner = User.query.filter_by(username=session['username']).first()
+
+    if request.method == 'POST':
+        blog_name = request.form['name']
+        blog_entry = request.form['entry']
+        new_blog = Blog(blog_name, owner)
+        db.session.add(new_blog)
+        db.session.commit()
+
+    blogs = Blog.query.all()
+    #new_blogs = Blog.query.filter_by(owner)#.all()
+    return render_template('create_blog.html', title = "Blogz", blogs=blogs)
 
 @app.route('/allpost', methods = ['GET'])
 def display_blogs():
@@ -89,7 +106,7 @@ def display_blogs():
 
 @app.before_request#run this function before you call the request handlers to check for user session in the dictionary runs before #every request
 def require_login():
-    allowed_routes = ['login', 'signup', 'display_blogs', 'index'] #list of request handler function names that users do not need to be logged in to view
+    allowed_routes = ['login', 'signup', 'display_users', 'display_blogs', 'index'] #list of request handler function names that users do not need to be logged in to view
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
