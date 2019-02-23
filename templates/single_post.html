@@ -6,12 +6,10 @@
 </style>
 
 <div class = 'center'>
-
 <h1>{{blog.name}}</h1>
 <p>{{blog.entry}}</p>
-<em>Written By: </em><a href ="/home?user={{user.id}}">{{user.username}}</a>
-
-    
+<em>Written by:  </em> <a href = '/allpost?owner_id={{user.username}}'>{{user.username}}</a>
 </div>
+
 
 {%endblock%}

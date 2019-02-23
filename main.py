@@ -78,34 +78,34 @@ def display_users():
     return render_template('index.html', title = "Blogz", users=users)
 
 
-@app.route('/', methods = ['POST', 'GET'])
-def index():
-    owner = User.query.filter_by(username=session['username']).first()
-    if request.method == 'POST':
-        blog_name = request.form['name']
-        blog_entry = request.form['entry']
-        new_blog = Blog(blog_name, owner)
-        db.session.add(new_blog)
-        db.session.commit()
-    blogs = Blog.query.all()
-    #new_blogs = Blog.query.filter_by(owner)#.all()
-    return render_template('create_blog.html', title = "Blogz", blogs=blogs)
+#@app.route('/', methods = ['POST', 'GET'])
+#def index():
+#    owner = User.query.filter_by(username=session['username']).first()
+#    if request.method == 'POST':
+#        blog_name = request.form['name']
+#        blog_entry = request.form['entry']
+#        new_blog = Blog(blog_name, owner)
+#        db.session.add(new_blog)
+#        db.session.commit()
+#    blogs = Blog.query.all()
+#    #new_blogs = Blog.query.filter_by(owner)#.all()
+#    return render_template('create_blog.html', title = "Blogz", blogs=blogs)
 
 @app.route('/allpost', methods = ['GET'])
-def display_blogs():
+def display_blog():
     if request.args:
         blog = request.args.get('id')
         blogs = Blog.query.get(blog)
         user = request.args.get('id')
         users = User.query.get(user)
-        return render_template('single_blog.html', title = "Blogz", blog=blogs, user = users)
+        return render_template('single_post.html', title = "Blogz", blog=blogs, user = users)
     blogs = Blog.query.all()
     users = User.query.all()  
     return render_template('display_blogs.html', title = "Blogz", blogs=blogs, user = users)
 
 @app.before_request#run this function before you call the request handlers to check for user session in the dictionary runs before #every request
 def require_login():
-    allowed_routes = ['login', 'signup', 'display_users', 'display_blogs', 'index'] #list of request handler function names that users do not need to be logged in to view
+    allowed_routes = ['login', 'signup', 'display_users', 'display_blog', 'index'] #list of request handler function names that users do not need to be logged in to view
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 

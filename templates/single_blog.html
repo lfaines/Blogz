@@ -7,9 +7,10 @@
 
 <div class = 'center'>
 <h1>{{blog.name}}</h1>
-</div>
 <p>{{blog.entry}}</p>
-<em>Written by: </em><a href = '/allpost?user={{user.userId}}'>{{user.username}}</a>
+<em>Written By:</em><a href = '/blog?owner ={{owner.username}}'>{{owner.username}}</a>
+</div>
+
 
 
 {%endblock%}

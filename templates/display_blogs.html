@@ -16,7 +16,10 @@
             {% for blog in blogs %} 
             <h1><a href ="/allpost?id={{blog.id}}">{{blog.name}}</a></h1>
             <p>{{blog.entry}}</p>
+            <em>Written by: </em>
             {%endfor%}
+
+           
         </div>
     {%endif%}
 {% endblock %}
