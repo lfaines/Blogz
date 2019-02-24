@@ -36,14 +36,9 @@ def newpost():
 def validate_newpost():
 
     owner = User.query.filter_by(username=session['username']).first()
-    
-    if request.method == 'POST':
-        name = request.form['name']
-        entry = request.form['entry']
-        new_blog = Blog(name, entry, owner)
-        db.session.add(new_blog)
-        db.session.commit()
-            
+    name = request.form['name']
+    entry = request.form['entry']
+                
     name_error = ""
     entry_error = ""
     blank = ""
@@ -61,9 +56,11 @@ def validate_newpost():
             name = request.form['name']
             entry = request.form['entry']
             new_blog = Blog(name, entry, owner)
+            db.session.add(new_blog)
+            db.session.commit()
             user = User.query.all()
             blog = new_blog
-            return render_template('single_blog.html', blog=blog, user = user, owner = owner)
+            return render_template('single_blog.html', blog=blog, user = user, owner = owner, title = "New Post")
 
 @app.route('/')
 @app.route('/home')
@@ -77,20 +74,6 @@ def display_users():
     users = User.query.all()
     return render_template('index.html', title = "Blogz", users=users)
 
-
-#@app.route('/', methods = ['POST', 'GET'])
-#def index():
-#    owner = User.query.filter_by(username=session['username']).first()
-#    if request.method == 'POST':
-#        blog_name = request.form['name']
-#        blog_entry = request.form['entry']
-#        new_blog = Blog(blog_name, owner)
-#        db.session.add(new_blog)
-#        db.session.commit()
-#    blogs = Blog.query.all()
-#    #new_blogs = Blog.query.filter_by(owner)#.all()
-#    return render_template('create_blog.html', title = "Blogz", blogs=blogs)
-
 @app.route('/allpost', methods = ['GET'])
 def display_blog():
     if request.args:
@@ -100,8 +83,8 @@ def display_blog():
         users = User.query.get(user)
         return render_template('single_post.html', title = "Blogz", blog=blogs, user = users)
     blogs = Blog.query.all()
-    users = User.query.all()  
-    return render_template('display_blogs.html', title = "Blogz", blogs=blogs, user = users)
+    user = User.query.all()  
+    return render_template('display_blogs.html', title = "Blogz", blogs=blogs, user = user)
 
 @app.before_request#run this function before you call the request handlers to check for user session in the dictionary runs before #every request
 def require_login():

@@ -10,28 +10,32 @@
             }
             .error {color: red;}
     </style>
-    
+
     <div class="center" style="background-color:black; color:white; padding:20px;">
-        <h1>Create a New Blog Post</h1>
+        <h1>Create a New Blog Post!</h1>
     </div>
 
 <form method ="POST">
-                <p>
-                <label for = "post-title">Title</label>
-                </p>
-                <p>
-                <input name = "name" type = "text" value ="{{name}}"/>
-                <h4 class = "error" name="name_error">{{name_error}}</h4>
-                </p>
-                <p>
-                <label for = "post-content">Entry</label>
-                </p>
-                <p>
+    <table>
+        <tr>
+            <td>
+                <label for = "post-title">Title<label></td>
+            <td>
+                <input name = "name" type = "text" value ="{{name}}">
+                <h4 class = "error" name="name_error" value = "name_error">{{name_error}}</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for = "post-content">Entry</label></td>
+                <td>
                     <textarea type ='textarea' name = 'entry' value = "{{entry}}"></textarea>
                     <h4 class = "error" name="entry_error">{{entry_error}}</h4>
-                </p>
-                <br><br>
-                <input type = "submit" value = "Add Entry" />
+                </td>
+        </tr>
+    </table>
+    <input type = "submit" value = "Add Entry" />
+
 </form>
 
-{% endblock content %}
+{% endblock %}
