@@ -16,7 +16,7 @@
             {% for blog in blogs %} 
             <h1><a href ="/allpost?id={{blog.id}}">{{blog.name}}</a></h1>
             <p>{{blog.entry}}</p>
-            Written by: {{user.username}}
+            Written by: {{blog.owner.username}}
             {%endfor%}
 
              

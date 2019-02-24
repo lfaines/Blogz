@@ -30,7 +30,7 @@ class User(db.Model):
    
 @app.route('/newpost')
 def newpost():
-    return render_template('create_blog.html', title = "Blogz")
+    return render_template('create_blog.html', title = "Create Post")
 
 @app.route('/newpost', methods=['POST'])
 def validate_newpost():
@@ -50,7 +50,7 @@ def validate_newpost():
         entry =  ""
 
     while name_error and entry_error:
-        return render_template("create_blog.html", name_error=name_error, entry_error=entry_error, name=name, entry=entry)
+        return render_template("create_blog.html", name_error=name_error, entry_error=entry_error, name=name, entry=entry, title = "Error")
     else:
         if request.method== 'POST':
             name = request.form['name']
