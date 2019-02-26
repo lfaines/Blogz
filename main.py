@@ -22,7 +22,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(20), unique = True)
     password = db.Column(db.String(20))
-    blogs =  db.relationship('Blog', backref='owner')#sqlalchemy should populate the blog list with things from the class blog such that the owner property is equal to the user
+    blogs =  db.relationship('Blog', backref='owner', lazy = True)#sqlalchemy should populate the blog list with things from the class blog such that the owner property is equal to the user
 
     def __init__(self, username, password):
         self.username = username
@@ -62,17 +62,15 @@ def validate_newpost():
             blog = new_blog
             return render_template('single_blog.html', blog=blog, user = user, owner = owner, title = "New Post")
 
-@app.route('/')
 @app.route('/home')
 def display_users():
     if request.args:
-        entry = request.args.get('user')
-        users = User.query.get(entry)
-        blog = request.args.get('user')
-        blogs = Blog.query.get(blog)
-        return render_template  ('singleUser.html', title = "Blogz",  user=users, blog = blogs)
+        username = request.args.get('user')
+        blogs = Blog.query.filter_by (owner_id=username).all()
+        if blogs:
+            return render_template  ('singleUser.html', blogs = blogs)
     users = User.query.all()
-    return render_template('index.html', title = "Blogz", users=users)
+    return render_template('index.html', title = "Users", users=users)
 
 @app.route('/allpost', methods = ['GET'])
 def display_blog():
@@ -81,10 +79,10 @@ def display_blog():
         blogs = Blog.query.get(blog)
         user = request.args.get('id')
         users = User.query.get(user)
-        return render_template('single_post.html', title = "Blogz", blog=blogs, user = users)
+        return render_template('single_post.html', title = "Post", blog=blogs, user = users)
     blogs = Blog.query.all()
     user = User.query.all()  
-    return render_template('display_blogs.html', title = "Blogz", blogs=blogs, user = user)
+    return render_template('display_blogs.html', title = "All Posts", blogs=blogs, user = user)
 
 @app.before_request#run this function before you call the request handlers to check for user session in the dictionary runs before #every request
 def require_login():
@@ -104,7 +102,7 @@ def login():
             return redirect('/newpost')
         else:
             flash("fields were left blank or username and password do not match or user does not exist", 'error')
-    return render_template('login.html', title = "Blogz")
+    return render_template('login.html', title = "Login")
 
 @app.route('/signup', methods = ['POST', 'GET'])
 def signup():
@@ -135,7 +133,7 @@ def signup():
             session['username'] = username
             return redirect('/newpost')
 
-    return render_template('signup.html', title = "Blogz")
+    return render_template('signup.html', title = "SignUp")
 
 @app.route('/logout')
 def logout():

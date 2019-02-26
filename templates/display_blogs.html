@@ -11,12 +11,13 @@
 
     {% if blogs | length == 0 %}
     <p>No blog entries yet</p>
+    
     {% else %}
         <div class = "center">
             {% for blog in blogs %} 
-            <h1><a href ="/allpost?id={{blog.id}}">{{blog.name}}</a></h1>
+            <h2><a href ="/allpost?id={{blog.id}}">{{blog.name}}</a></h2>
             <p>{{blog.entry}}</p>
-            Written by: {{blog.owner.username}}
+           <em>Written by: </em><a href = '/home?user={{blog.owner.id}}'>{{blog.owner.username}}
             {%endfor%}
 
              
